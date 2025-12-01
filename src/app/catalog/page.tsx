@@ -30,7 +30,7 @@ const CatalogPage = () => {
   }
 
   return (
-    <ProtectedPage allowedRoles={['cook']}>
+    <ProtectedPage allowedRoles={['admin']}>
       <main className="mx-auto max-w-4xl py-12">
         <h1
           className={twJoin(brixtonWood.className, 'mb-8 text-6xl uppercase')}
