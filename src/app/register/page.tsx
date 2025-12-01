@@ -3,50 +3,33 @@
 import GoBackButton from '@/components/GoBackButton';
 import { brixtonWood } from '@/fonts';
 import { useApiClients } from '@/hooks/use-api-clients';
-import { LoginRequest } from '@/schemas/login-request';
+import { RegisterRequest } from '@/schemas/register-request';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const apiClients = useApiClients();
 
   const form = useForm({
-    resolver: zodResolver(LoginRequest),
+    resolver: zodResolver(RegisterRequest),
     defaultValues: {
       email: '',
+      username: '',
       password: '',
     },
   });
 
-  const onSubmit = async (data: LoginRequest) => {
-    const res = await apiClients.users.login({ body: data });
+  const onSubmit = async (data: RegisterRequest) => {
+    const res = await apiClients.users.register({ body: data });
 
-    if (res.status === 401) {
-      alert('Credenciales incorrectas.');
+    if (res.status === 409) {
+      alert('Correo ya registrado.');
       return;
     }
 
-    const resSelf = await apiClients.users.getSelf({
-      extraHeaders: {
-        Authorization: `Bearer ${res.body.token}`,
-      },
-    });
-
-    if (resSelf.status === 401) {
-      alert('Algo salió mal :(');
-      return;
-    }
-
-    if (resSelf.body.role === 'client') {
-      alert('Tu cuenta no tiene permiso para esta página.');
-      return;
-    }
-
-    localStorage.setItem('sessionToken', res.body.token);
     // eslint-disable-next-line react-hooks/immutability
-    window.location.href = '/';
+    window.location.href = '/login';
   };
 
   return (
@@ -60,15 +43,8 @@ const LoginPage = () => {
           'mb-3 text-5xl font-normal uppercase',
         )}
       >
-        Iniciar sesión
+        Regístrate
       </h1>
-      <p>
-        Usuario nuevo?{' '}
-        <Link href="/register" className="text-link underline">
-          Crear una cuenta
-        </Link>
-      </p>
-
       <form onSubmit={form.handleSubmit(onSubmit)} className="my-6 space-y-5">
         <input
           type="email"
@@ -77,17 +53,33 @@ const LoginPage = () => {
           {...form.register('email', { required: true })}
         />
         <input
+          type="text"
+          placeholder="Nombre de usuario"
+          className="border-muted block w-full rounded border px-3 py-4"
+          {...form.register('username', { required: true })}
+        />
+        <input
           type="password"
           placeholder="Contraseña"
           className="border-muted block w-full rounded border px-3 py-4"
           {...form.register('password', { required: true })}
         />
+        <select
+          className="border-muted block w-full rounded border px-3 py-4"
+          {...form.register('role', { required: true })}
+        >
+          <option disabled>¿Qué tipo de usuario eres?</option>
+          <option value="cook">cocinero</option>
+          <option value="dispatcher">despachador</option>
+          <option value="driver">conductor</option>
+          <option value="admin">administrador</option>
+        </select>
         <button className="bg-accent text-background block w-full cursor-pointer rounded px-3 py-3 transition-all hover:brightness-85">
-          Iniciar Sesión
+          Registrarse
         </button>
       </form>
     </main>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
