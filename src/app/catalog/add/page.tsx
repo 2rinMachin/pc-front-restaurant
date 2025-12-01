@@ -1,6 +1,5 @@
 'use client';
 
-import ProtectedPage from '@/components/ProtectedPage';
 import { brixtonWood } from '@/fonts';
 import { useApiClients } from '@/hooks/use-api-clients';
 import { CreateProductRequest } from '@/schemas/create-product-requests';
@@ -43,68 +42,64 @@ const AddProductPage = () => {
 
   // TODO: add allowedRoles
   return (
-    <ProtectedPage>
-      <main className="mx-auto max-w-3xl py-12">
-        <h1
-          className={twJoin(brixtonWood.className, 'mb-8 text-6xl uppercase')}
-        >
-          Añadir producto
-        </h1>
+    <main className="mx-auto max-w-3xl py-12">
+      <h1 className={twJoin(brixtonWood.className, 'mb-8 text-6xl uppercase')}>
+        Añadir producto
+      </h1>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="flex gap-x-3">
-            <label className="block grow">
-              Nombre del producto
-              <input
-                placeholder="Nombre del producto"
-                className="border-muted block w-full rounded border px-3 py-4"
-                {...form.register('name', { required: true })}
-              />
-              {form.formState.errors.name && (
-                <p className="text-accent mt-2">
-                  {form.formState.errors.name.message}
-                </p>
-              )}
-            </label>
-            <label className="block min-w-2 shrink">
-              Precio
-              <input
-                placeholder="Precio"
-                type="number"
-                step={0.01}
-                className="border-muted block w-full min-w-1 rounded border px-3 py-4"
-                {...form.register('price', { required: true, min: 0 })}
-              />
-              {form.formState.errors.price && (
-                <p className="text-accent mt-2">
-                  {form.formState.errors.price.message}
-                </p>
-              )}
-            </label>
-          </div>
-          <label className="block">
-            Imagen
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="flex gap-x-3">
+          <label className="block grow">
+            Nombre del producto
             <input
-              type="file"
-              accept="image/*"
+              placeholder="Nombre del producto"
               className="border-muted block w-full rounded border px-3 py-4"
-              onChange={handleImageUpload}
+              {...form.register('name', { required: true })}
             />
-            {image && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={`data:image/png;base64,${image}`}
-                alt="preview"
-                className="mt-4 h-40 w-auto rounded border"
-              />
+            {form.formState.errors.name && (
+              <p className="text-accent mt-2">
+                {form.formState.errors.name.message}
+              </p>
             )}
           </label>
-          <button className="bg-accent text-background rounded px-6 py-3 text-lg">
-            Añadir
-          </button>
-        </form>
-      </main>
-    </ProtectedPage>
+          <label className="block min-w-2 shrink">
+            Precio
+            <input
+              placeholder="Precio"
+              type="number"
+              step={0.01}
+              className="border-muted block w-full min-w-1 rounded border px-3 py-4"
+              {...form.register('price', { required: true, min: 0 })}
+            />
+            {form.formState.errors.price && (
+              <p className="text-accent mt-2">
+                {form.formState.errors.price.message}
+              </p>
+            )}
+          </label>
+        </div>
+        <label className="block">
+          Imagen
+          <input
+            type="file"
+            accept="image/*"
+            className="border-muted block w-full rounded border px-3 py-4"
+            onChange={handleImageUpload}
+          />
+          {image && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={`data:image/png;base64,${image}`}
+              alt="preview"
+              className="mt-4 h-40 w-auto rounded border"
+            />
+          )}
+        </label>
+        <button className="bg-accent text-background rounded px-6 py-3 text-lg">
+          Añadir
+        </button>
+      </form>
+    </main>
   );
 };
 

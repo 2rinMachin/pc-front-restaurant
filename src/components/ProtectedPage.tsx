@@ -1,3 +1,5 @@
+'use client';
+
 import { useAuth } from '@/hooks/use-auth';
 import { UserRole } from '@/schemas/user';
 import { redirect } from 'next/navigation';
@@ -14,12 +16,10 @@ const ProtectedPage = ({ allowedRoles, children }: Props) => {
 
   if (auth.loading) return <LoadingScreen />;
 
-  if (
-    !auth.user ||
-    auth.user.role === 'client' ||
-    (allowedRoles && !allowedRoles.includes(auth.user.role))
-  )
-    return redirect('/login');
+  if (!auth.user || auth.user.role === 'client') return redirect('/login');
+
+  if (allowedRoles && !allowedRoles.includes(auth.user.role))
+    return redirect('/');
 
   return children;
 };

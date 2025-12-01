@@ -1,4 +1,5 @@
 import NavPanel from '@/components/NavPanel';
+import ProtectedPage from '@/components/ProtectedPage';
 import { ReactNode } from 'react';
 
 export interface Props {
@@ -6,10 +7,12 @@ export interface Props {
 }
 
 const RootLayout = ({ children }: Props) => (
-  <div className="mx-55 my-5 flex">
-    <NavPanel />
-    <div className="grow">{children}</div>
-  </div>
+  <ProtectedPage>
+    <div className="mx-55 my-5 flex">
+      <NavPanel />
+      <div className="grow">{children}</div>
+    </div>
+  </ProtectedPage>
 );
 
 export default RootLayout;

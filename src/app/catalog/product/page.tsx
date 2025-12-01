@@ -1,7 +1,6 @@
 'use client';
 
 import LoadingScreen from '@/components/LoadingScreen';
-import ProtectedPage from '@/components/ProtectedPage';
 import { brixtonWood } from '@/fonts';
 import { useApiClients } from '@/hooks/use-api-clients';
 import { UpdateProductRequest } from '@/schemas/update-product-requests';
@@ -75,72 +74,68 @@ const ProductPage = () => {
 
   // TODO: add allowedRoles
   return (
-    <ProtectedPage>
-      <main className="mx-auto max-w-3xl py-12">
-        <h1
-          className={twJoin(brixtonWood.className, 'mb-8 text-6xl uppercase')}
-        >
-          Información de producto
-        </h1>
+    <main className="mx-auto max-w-3xl py-12">
+      <h1 className={twJoin(brixtonWood.className, 'mb-8 text-6xl uppercase')}>
+        Información de producto
+      </h1>
 
-        {product.image_url && (
-          <div className="relative mb-7 h-80 w-full">
-            <Image
-              src={product.image_url}
-              unoptimized
-              alt="product"
-              fill
-              className="rounded object-cover"
-            />
-          </div>
-        )}
-
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="flex gap-x-3">
-            <label className="block grow">
-              Nombre del producto
-              <input
-                placeholder="Nombre del producto"
-                className="border-muted block w-full rounded border px-3 py-4"
-                {...form.register('name', { required: true })}
-              />
-              {form.formState.errors.name && (
-                <p className="text-accent mt-2">
-                  {form.formState.errors.name.message}
-                </p>
-              )}
-            </label>
-            <label className="block min-w-2 shrink">
-              Precio
-              <input
-                placeholder="Precio"
-                type="number"
-                step={0.01}
-                className="border-muted block w-full min-w-1 rounded border px-3 py-4"
-                {...form.register('price', { required: true, min: 0 })}
-              />
-              {form.formState.errors.price && (
-                <p className="text-accent mt-2">
-                  {form.formState.errors.price.message}
-                </p>
-              )}
-            </label>
-          </div>
-          <button className="bg-accent text-background rounded px-6 py-3 text-lg">
-            <LuSave className="mr-2 inline" /> Guardar cambios
-          </button>
-        </form>
-
-        <div className="mt-4">
-          <button
-            onClick={deleteProduct}
-            className="border-accent rounded border-2 px-6 py-3 text-lg"
-          >
-            <LuTrash className="mr-2 inline" /> Borrar producto
-          </button>
+      {product.image_url && (
+        <div className="relative mb-7 h-80 w-full">
+          <Image
+            src={product.image_url}
+            unoptimized
+            alt="product"
+            fill
+            className="rounded object-cover"
+          />
         </div>
-      </main>
-    </ProtectedPage>
+      )}
+
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="flex gap-x-3">
+          <label className="block grow">
+            Nombre del producto
+            <input
+              placeholder="Nombre del producto"
+              className="border-muted block w-full rounded border px-3 py-4"
+              {...form.register('name', { required: true })}
+            />
+            {form.formState.errors.name && (
+              <p className="text-accent mt-2">
+                {form.formState.errors.name.message}
+              </p>
+            )}
+          </label>
+          <label className="block min-w-2 shrink">
+            Precio
+            <input
+              placeholder="Precio"
+              type="number"
+              step={0.01}
+              className="border-muted block w-full min-w-1 rounded border px-3 py-4"
+              {...form.register('price', { required: true, min: 0 })}
+            />
+            {form.formState.errors.price && (
+              <p className="text-accent mt-2">
+                {form.formState.errors.price.message}
+              </p>
+            )}
+          </label>
+        </div>
+        <button className="bg-accent text-background rounded px-6 py-3 text-lg">
+          <LuSave className="mr-2 inline" /> Guardar cambios
+        </button>
+      </form>
+
+      <div className="mt-4">
+        <button
+          onClick={deleteProduct}
+          className="border-accent rounded border-2 px-6 py-3 text-lg"
+        >
+          <LuTrash className="mr-2 inline" /> Borrar producto
+        </button>
+      </div>
+    </main>
   );
 };
 
