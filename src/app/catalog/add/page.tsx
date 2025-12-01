@@ -71,6 +71,7 @@ const AddProductPage = () => {
               <input
                 placeholder="Precio"
                 type="number"
+                step={0.01}
                 className="border-muted block w-full min-w-1 rounded border px-3 py-4"
                 {...form.register('price', { required: true, min: 0 })}
               />
