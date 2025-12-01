@@ -6,6 +6,7 @@ import { brixtonWood } from '@/fonts';
 import { useApiClients } from '@/hooks/use-api-clients';
 import { formatPrice } from '@/util';
 import { useQuery } from '@tanstack/react-query';
+import Image from 'next/image';
 import Link from 'next/link';
 import { LuPlus } from 'react-icons/lu';
 import { twJoin } from 'tailwind-merge';
@@ -48,6 +49,18 @@ const CatalogPage = () => {
         <ul className="grid grid-cols-3 gap-3">
           {products.body.map((product) => (
             <li key={product.product_id} className="rounded shadow-lg">
+              {product.image_url && (
+                <div className="relative mb-8 h-30 w-full">
+                  <Image
+                    src={product.image_url}
+                    unoptimized
+                    alt="product"
+                    fill
+                    className="rounded object-cover"
+                  />
+                </div>
+              )}
+
               <Link
                 href={`/catalog/product?id=${product.product_id}`}
                 className="block h-full px-4 py-3"
