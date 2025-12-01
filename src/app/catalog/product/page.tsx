@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { redirect, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { LuSave } from 'react-icons/lu';
+import { LuSave, LuTrash } from 'react-icons/lu';
 import { twJoin } from 'tailwind-merge';
 
 const ProductPage = () => {
@@ -62,6 +62,13 @@ const ProductPage = () => {
 
     alert('Cambios guardados!');
     window.location.reload();
+  };
+
+  const deleteProduct = async () => {
+    await apiClients.catalog.deleteProduct({ params: { id: productId } });
+
+    // eslint-disable-next-line react-hooks/immutability
+    window.location.href = '/catalog';
   };
 
   const product = productData.body;
@@ -122,6 +129,15 @@ const ProductPage = () => {
             <LuSave className="mr-2 inline" /> Guardar cambios
           </button>
         </form>
+
+        <div className="mt-4">
+          <button
+            onClick={deleteProduct}
+            className="border-accent rounded border-2 px-6 py-3 text-lg"
+          >
+            <LuTrash className="mr-2 inline" /> Borrar producto
+          </button>
+        </div>
       </main>
     </ProtectedPage>
   );

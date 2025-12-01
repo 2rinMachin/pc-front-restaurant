@@ -19,6 +19,11 @@ const links: Link[] = [
     allowedRoles: ['cook', 'dispatcher', 'driver', 'admin'],
   },
   {
+    label: 'Catálogo',
+    href: '/catalog',
+    allowedRoles: ['admin'],
+  },
+  {
     label: 'Todos los pedidos',
     href: '/orders',
     allowedRoles: ['admin'],
