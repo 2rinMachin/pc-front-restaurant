@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-text: #231f20;
+  --color-muted: #666666;
+  --color-link: #0a69b7;
+  --color-accent: #c8102e;
+  --color-background: white;
+}
+
+body {
+  @apply bg-background text-text;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  @apply enabled:cursor-pointer disabled:brightness-80;
+}
