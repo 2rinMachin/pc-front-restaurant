@@ -13,8 +13,9 @@ const AccountButton = () => {
   return (
     <Link
       href={auth.user ? '/my-account/details' : '/login'}
-      className="cursor-pointer rounded-md p-3 transition-colors hover:bg-black/10 focus:outline-2 focus:outline-white"
+      className="flex cursor-pointer items-center gap-x-3 rounded-md p-3 transition-colors hover:bg-black/10 focus:outline-2 focus:outline-white"
     >
+      {auth.user && <span>{auth.user.username}</span>}
       <Icon className="size-6" />
     </Link>
   );

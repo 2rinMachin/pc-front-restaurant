@@ -23,7 +23,7 @@ const AddProductPage = () => {
 
   const onSubmit = async (data: CreateProductRequest) => {
     const res = await apiClients.catalog.createProduct({ body: data });
-    redirect(`/dashboard/catalog/product?id=${res.body.product_id}`);
+    redirect(`/catalog/product?id=${res.body.product_id}`);
   };
 
   // eslint-disable-next-line react-hooks/incompatible-library

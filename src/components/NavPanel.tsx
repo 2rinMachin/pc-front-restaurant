@@ -7,12 +7,10 @@ import { useApiClients } from '@/hooks/use-api-clients';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { twJoin, twMerge } from 'tailwind-merge';
-import Clock from './icons/Clock';
 import LogOut from './icons/LogOut';
 
 const links = [
   { href: '/my-account/details', label: 'Mis Detalles', Icon: Person },
-  { href: '/my-account/orders', label: 'Mis Pedidos', Icon: Clock },
 ] as const;
 
 const NavPanel = () => {

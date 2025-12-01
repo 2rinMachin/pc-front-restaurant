@@ -14,8 +14,12 @@ const ProtectedPage = ({ allowedRoles, children }: Props) => {
 
   if (auth.loading) return <LoadingScreen />;
 
-  if (!auth.user || (allowedRoles && !allowedRoles.includes(auth.user.role)))
-    return redirect('/');
+  if (
+    !auth.user ||
+    auth.user.role === 'client' ||
+    (allowedRoles && !allowedRoles.includes(auth.user.role))
+  )
+    return redirect('/login');
 
   return children;
 };

@@ -38,7 +38,7 @@ const CatalogPage = () => {
         </h1>
         <div className="mb-8">
           <Link
-            href="/dashboard/catalog/add"
+            href="/catalog/add"
             className="bg-accent text-background rounded px-6 py-4"
           >
             <LuPlus className="mr-2 inline stroke-3" />
@@ -49,7 +49,7 @@ const CatalogPage = () => {
           {products.body.map((product) => (
             <li key={product.product_id} className="rounded shadow-lg">
               <Link
-                href={`/dashboard/catalog/product?id=${product.product_id}`}
+                href={`/catalog/product?id=${product.product_id}`}
                 className="block h-full px-4 py-3"
               >
                 <div className="mb-4 text-lg uppercase">{product.name}</div>

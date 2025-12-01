@@ -41,7 +41,7 @@ const ProductPage = () => {
     }
   }, [productData, form]);
 
-  if (!productId) return redirect('/dashboard/catalog');
+  if (!productId) return redirect('/catalog');
 
   if (isLoading || !productData) return <LoadingScreen />;
 

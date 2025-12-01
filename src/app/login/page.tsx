@@ -5,7 +5,6 @@ import { brixtonWood } from '@/fonts';
 import { useApiClients } from '@/hooks/use-api-clients';
 import { LoginRequest } from '@/schemas/login-request';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
 
@@ -28,6 +27,22 @@ const LoginPage = () => {
       return;
     }
 
+    const resSelf = await apiClients.users.getSelf({
+      extraHeaders: {
+        Authorization: `Bearer ${res.body.token}`,
+      },
+    });
+
+    if (resSelf.status === 401) {
+      alert('Algo salió mal :(');
+      return;
+    }
+
+    if (resSelf.body.role === 'client') {
+      alert('Tu cuenta no tiene permiso para esta página.');
+      return;
+    }
+
     localStorage.setItem('sessionToken', res.body.token);
     // eslint-disable-next-line react-hooks/immutability
     window.location.href = '/';
@@ -46,12 +61,6 @@ const LoginPage = () => {
       >
         Iniciar sesión
       </h1>
-      <p>
-        Usuario nuevo?{' '}
-        <Link href="/register" className="text-link underline">
-          Crear una cuenta
-        </Link>
-      </p>
       <form onSubmit={form.handleSubmit(onSubmit)} className="my-6 space-y-5">
         <input
           type="email"
