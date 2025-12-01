@@ -47,7 +47,7 @@ const Header = () => {
           >
             <Logo /> Restaurante
           </Link>
-          <nav className="flex items-center gap-x-3">
+          <nav className="flex items-center gap-x-4">
             {links.filter(linkFilter).map((link) => (
               <Link key={link.href} href={link.href}>
                 {link.label}
