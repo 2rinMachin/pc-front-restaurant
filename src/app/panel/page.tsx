@@ -9,6 +9,7 @@ import { useApiClients } from '@/hooks/use-api-clients';
 import { useAuth } from '@/hooks/use-auth';
 import { roleLabels } from '@/lang';
 import { Order, OrderStatus } from '@/schemas/order';
+import { UserRole } from '@/schemas/user';
 import { WebSocketMessage } from '@/schemas/websocket-message';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
@@ -47,6 +48,14 @@ const roleInfo = {
   },
 } as const;
 
+const roleQuery: Record<UserRole, string> = {
+  cook: 'cook_id',
+  dispatcher: 'dispatcher_id',
+  driver: 'driver_id',
+  admin: 'admin_id',
+  client: 'client_id',
+};
+
 const PanelPage = () => {
   const apiClients = useApiClients();
   const auth = useAuth();
@@ -63,9 +72,15 @@ const PanelPage = () => {
   } = useQuery({
     queryKey: ['orders', startStatus, auth.user?.user_id],
     queryFn: () =>
-      apiClients.orders.getAllOrders({
-        query: { cook_id: auth.user?.user_id, status: doingStatus },
-      }),
+      auth.user
+        ? apiClients.orders.getAllOrders({
+            query: {
+              [roleQuery[auth.user.role]]: auth.user.user_id,
+              status: doingStatus,
+            },
+          })
+        : null,
+    enabled: !!auth.user,
   });
 
   const {
