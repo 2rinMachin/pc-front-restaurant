@@ -16,7 +16,7 @@ const links: Link[] = [
   {
     label: 'Panel de atención',
     href: '/panel',
-    allowedRoles: ['cook', 'dispatcher', 'driver', 'admin'],
+    allowedRoles: ['cook', 'dispatcher', 'driver'],
   },
   {
     label: 'Catálogo',
